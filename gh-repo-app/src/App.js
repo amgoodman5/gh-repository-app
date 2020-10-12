@@ -2,13 +2,21 @@
 
 import React from "react";
 import "./App.css";
-
+import {
+  Link
+} from 'react-router-dom';
+import { Box, Grommet, Card, CardBody, CardHeader, CardFooter, Button } from 'grommet';
 // https://api.github.com/search/repositories?q=html
+
+
 function App() {
   const [inputValue, setInputValue] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [repos, setRepos] = React.useState([]);
+
+
+
 
   React.useEffect(() => {
     if (!inputValue) {
@@ -17,13 +25,13 @@ function App() {
 
     setIsLoading(true);
 
+
     // make API calls
     fetch("https://api.github.com/search/repositories?q=" + inputValue + "&sort=stars&order")
       .then(response => {
         return response.json();
       })
       .then(data => {
-        console.log(data);
         setIsLoading(false);
         setRepos(data.items);
       })
@@ -34,8 +42,17 @@ function App() {
       });
   }, [inputValue]);
 
+  const theme = {
+    global: {
+      font: {
+        size: '18px',
+        height: '20px',
+      },
+    },
+  };
+
   return (
-    <div>
+    <Grommet theme={theme} themeMode="dark">
       <form
         onSubmit={evt => {
           evt.preventDefault();
@@ -57,19 +74,26 @@ function App() {
       )}
       <ul className="repo_list">
         {repos.map(repo => {
+          console.log(repo)
           return (
-            <li key={repo.id} className="repo_item">
-              <a href={repo.html_url} target="_blank">
-                {repo.name}
+            <Card height="small" width="medium" background="dark-2" >
+              <CardHeader pad="medium">{repo.name}</CardHeader>
+              <CardBody pad="medium">{repo.description}</CardBody>
+              <CardFooter pad={{ horizontal: "small" }} background="light">
+                <Link to={{
+                  pathname: `/detail/${repo.id}`,
+                  state: { repo }
+                }}>
+                  <Button primary hoverIndicator label="Check it out" />
+                </Link>
 
-              </a>
-              <p>{repo.description}</p>
-              <p>{repo.stargazers_count}</p>
-            </li>
-          );
-        })}
+              </CardFooter>
+            </Card>
+          )
+        })
+        }
       </ul>
-    </div>
+    </Grommet>
   );
 }
 export default App;
