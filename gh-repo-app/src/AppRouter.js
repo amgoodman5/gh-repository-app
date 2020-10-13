@@ -3,7 +3,7 @@ import React from 'react'
 import { BrowserRouter, Switch, Route } from "react-router-dom"
 
 import App from "./App"
-import Detail from "./Detail"
+import Detail from "./components/Detail"
 
 const AppRouter = () => (
   <BrowserRouter>

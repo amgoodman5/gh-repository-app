@@ -2,6 +2,8 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { Box, Grommet, Card, CardBody, CardHeader, CardFooter, Button } from 'grommet';
+import { Star } from 'grommet-icons';
+
 
 const Details = (props) => {
   const { location } = props
@@ -34,14 +36,18 @@ const Details = (props) => {
   return (
     <Grommet theme={theme} themeMode="dark">
       <AppBar>Hello Grommet!</AppBar>
-      <h1>hi</h1>
-      <Card height="medium" width="medium" background="dark-2">
-        <CardHeader pad="medium">{repo.name}</CardHeader>
-        <CardBody pad="medium">{repo.description}</CardBody>
-        <CardFooter pad={{ horizontal: "small" }} background="light">
-          <Button primary hoverIndicator label="home" href="/" />
-        </CardFooter>
-      </Card>
+      <Box direction="column" gap="large" pad="medium" align="center" margin="small">
+        <Card key={repo.id} height="small" width="medium" background="dark-2" >
+          <CardHeader pad="medium">{repo.name}</CardHeader>
+          <CardBody pad="medium">{repo.description}</CardBody>
+          <CardFooter background="neutral-3" pad="medium">
+            <Box align="center">{repo.stargazers_count}<Star size='medium' /></Box>
+            <Link to="/">
+              <Button primary hoverIndicator label="home" href="/" />
+            </Link>
+          </CardFooter>
+        </Card>
+      </Box>
       {/* <div className="row">
         <div className="col-sm-12">
           <div className="imageView__container"> */}
