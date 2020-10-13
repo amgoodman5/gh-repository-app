@@ -1,8 +1,13 @@
 
 import React from "react"
-import { Link } from "react-router-dom"
-import { Box, Grommet, Card, CardBody, CardHeader, CardFooter, Button } from 'grommet';
+
+import { Box, Grommet, Card, CardBody, CardHeader, Avatar, CardFooter, Button, Text, Heading, Paragraph } from 'grommet';
 import { Star } from 'grommet-icons';
+import { Github } from 'grommet-icons';
+import AnimatedNumber from 'animated-number-react'
+
+import "../App.css";
+
 
 
 const Details = (props) => {
@@ -10,6 +15,9 @@ const Details = (props) => {
   const { state } = location
   const { repo } = state
   console.log(repo)
+
+
+  const formatValue = value => Number(value).toFixed(0);
 
   const theme = {
     global: {
@@ -19,53 +27,41 @@ const Details = (props) => {
       },
     },
   };
-  const AppBar = (props) => (
-    <Box
-      tag='header'
-      direction='row'
-      align='center'
-      justify='between'
-      background="dark-2"
-      pad={{ left: 'medium', right: 'small', vertical: 'small' }}
-      elevation='medium'
-      style={{ zIndex: '1' }}
-      {...props}
-    />
-  );
 
   return (
-    <Grommet theme={theme} themeMode="dark">
-      <AppBar>Hello Grommet!</AppBar>
-      <Box direction="column" gap="large" pad="medium" align="center" margin="small">
-        <Card key={repo.id} height="small" width="medium" background="dark-2" >
-          <CardHeader pad="medium">{repo.name}</CardHeader>
-          <CardBody pad="medium">{repo.description}</CardBody>
-          <CardFooter background="neutral-3" pad="medium">
-            <Box align="center">{repo.stargazers_count}<Star size='medium' /></Box>
-            <Link to="/">
-              <Button primary hoverIndicator label="home" href="/" />
-            </Link>
+    <Grommet theme={theme}>
+      <Box direction="column" align="center" margin="small">
+        <Card key={repo.id} width="medium"  >
+          <CardHeader pad="medium" background="neutral-3" >
+            <Heading >
+              {repo.name}
+            </Heading>
+            <Avatar src={repo.owner.avatar_url} />
+          </CardHeader>
+          <CardBody pad="medium" height="medium" background="light-4">
+            <Heading color="neutral-3" size="small" margin="none">Description:</Heading>
+            <Paragraph color="dark-2" margin="none" >{repo.description}</Paragraph>
+            <Heading size="small" color="neutral-3" margin={{ "top": "15px", bottom: '0' }}>Owner:</Heading>
+            <Paragraph color="dark-2" margin="none">{repo.owner.login}</Paragraph>
+            <Heading size="small" color="neutral-3" margin={{ "top": "15px", bottom: '0' }}>Language:</Heading>
+            <Paragraph color="dark-2" margin="none"> {repo.language}</Paragraph>
+          </CardBody>
+          <CardFooter background="dark-2" pad="medium">
+            <Text className="stars">
+              <Star size='medium' color="accent-3" />
+              <AnimatedNumber
+                className='numbers'
+                duration={700}
+                value={repo.stargazers_count}
+                formatValue={formatValue}
+                delay={300}
+                speed={1500} />
+            </Text>
+            <Button color="accent-3" primary hoverIndicator label="Repo" icon={<Github />} href={repo.owner.html_url} />
+            <Button color="accent-3" hoverIndicator label="Back" href="/" />
           </CardFooter>
         </Card>
       </Box>
-      {/* <div className="row">
-        <div className="col-sm-12">
-          <div className="imageView__container"> */}
-      {/* <img src={image} alt={tags} className="imageView__img img-responsive" /> */}
-      {/* <div className="imageView__copyright">
-        <p>{repo.name}</p>
-        <p>{repo.description}</p>
-        <p>{repo.stargazers_count}</p>
-        <p>{repo.language}</p>
-      </div>
-      <div className="imageView__text">
-        <button className="active-recipe__button">
-          <Link to="/">Home</Link>
-        </button>
-      </div>
-          </div>
-        </div >
-      </div > * /} */}
     </Grommet >
   )
 }
