@@ -1,6 +1,5 @@
 
 import React from "react";
-
 import SearchForm from './SearchForm'
 import Results from './Results'
 import { Card, Grommet, Box } from 'grommet';
@@ -12,9 +11,8 @@ const Search = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [repos, setRepos] = React.useState([]);
-  const [sortbylanguage, setFilter] = React.useState("");
   const [checked, setChecked] = React.useState(true);
-
+  const [filter, ByLanguage] = React.useState([]);
   React.useEffect(() => {
     if (!inputValue) {
       return;
@@ -37,8 +35,7 @@ const Search = () => {
       });
   }, [inputValue]);
 
-
-  const sortReposByLanguage = sortBy(repos, function (o) { return o.language; });
+  const sortReposByLanguage = sortBy(repos, (repo) => { return repo.language; });
 
   return (
     <Grommet themeMode="dark" alignContent="center">

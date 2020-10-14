@@ -1,5 +1,12 @@
 import React from "react"
-import { Box, CheckBox, Button, Form, FormField, TextInput, Paragraph } from 'grommet';
+import {
+  Box,
+  CheckBox,
+  Button,
+  Form,
+  FormField,
+  TextInput,
+} from 'grommet';
 
 const SearchForm = (props) => {
   const { checked, setInputValue, setChecked } = props

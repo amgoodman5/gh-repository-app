@@ -38,9 +38,3 @@ const Results = ({ repo }) => {
   )
 }
 export default Results
-
-
-// [] organize code
-// [] clean up Style
-// [] filter button
-// [] styles
